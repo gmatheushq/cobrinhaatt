@@ -1,0 +1,17 @@
+{
+  "name": "Cobrinha AI",
+  "short_name": "Cobrinha",
+  "description": "Jogo da cobrinha que ensina uma IA.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#282828",
+  "theme_color": "#282828",
+  "lang": "pt-BR",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

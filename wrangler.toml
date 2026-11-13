@@ -1,0 +1,8 @@
+name = "cobrinha"
+compatibility_date = "2026-01-01"
+pages_build_output_dir = "docs"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "cobrinha"
+database_id = "COLE_AQUI_O_ID_DO_D1"   # sai de: npx wrangler d1 create cobrinha

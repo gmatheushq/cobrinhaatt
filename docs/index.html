@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Cobrinha AI</title>
+<meta name="description" content="Jogo da cobrinha que ensina uma IA. Jogue pelo celular deslizando o dedo.">
+<meta name="theme-color" content="#282828">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Cobrinha">
+<style>
+  :root { --verde:#009600; --cinza:#282828; --azul:#0064ff; --amarelo:#ffdc00; }
+  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html, body { margin:0; position:fixed; inset:0; overflow:hidden; overscroll-behavior:none;
+    touch-action:none; background:var(--cinza); color:#fff;
+    font-family:Arial, Helvetica, sans-serif; -webkit-user-select:none; user-select:none;
+    -webkit-touch-callout:none; }
+  #app { position:absolute; inset:0; display:flex; flex-direction:column;
+    padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
+  #hud { display:flex; align-items:center; justify-content:space-between; gap:8px;
+    padding:8px 12px; min-height:44px; font-size:18px; }
+  #hud b { font-size:22px; }
+  #info { font-size:13px; opacity:.85; }
+  #status { font-size:12px; opacity:.8; min-width:0; text-align:right; }
+  #sair { background:var(--azul); color:#fff; border:0; border-radius:8px; padding:6px 12px; font-size:14px; }
+  #palco { flex:1; min-height:0; display:flex; align-items:center; justify-content:center; position:relative; touch-action:none; }
+  canvas { display:block; background:var(--verde); touch-action:none; }
+  #dica { position:absolute; left:0; right:0; bottom:8%; text-align:center; font-size:20px;
+    pointer-events:none; text-shadow:0 1px 3px #000; padding:0 16px; }
+  .painel { position:fixed; inset:0; background:var(--cinza); display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:14px; padding:24px; text-align:center;
+    touch-action:manipulation; z-index:5; }
+  .painel[hidden], #dica[hidden], #sair[hidden] { display:none; }
+  h1 { margin:0; font-size:clamp(26px, 8vw, 46px); }
+  p { margin:0; }
+  .sub { font-size:20px; }
+  .peq { font-size:14px; opacity:.85; max-width:30em; line-height:1.4; }
+  .aviso { color:var(--amarelo); }
+  button.grande { width:min(400px, 86vw); height:64px; border:0; border-radius:12px; color:#fff;
+    font-size:19px; font-weight:bold; cursor:pointer; }
+  button.grande:active { filter:brightness(.85); }
+  .verde { background:var(--verde); } .azul { background:var(--azul); } .cinza { background:#646464; }
+  button:disabled { background:#646464; cursor:default; }
+  #fim h1 { color:#fff; } #fim.venceu h1 { color:var(--amarelo); }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="hud">
+    <div><b id="pont">Pontuação: 0</b><div id="info"></div></div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <span id="status" aria-live="polite"></span>
+      <button id="sair" hidden>SAIR</button>
+    </div>
+  </div>
+  <div id="palco"><canvas id="tela"></canvas><div id="dica" hidden></div></div>
+</div>
+
+<section id="menu" class="painel">
+  <h1>JOGO DA COBRINHA</h1>
+  <p class="sub">Quem vai jogar?</p>
+  <button id="b-humano" class="grande verde">JOGAR COMO HUMANO</button>
+  <button id="b-ia" class="grande azul">JOGAR COM A IA</button>
+  <p class="peq" id="m-dica">Deslize o dedo na tela para virar a cobra. No computador: setas ou WASD.</p>
+  <p class="peq">Suas jogadas são salvas de forma anônima (sem login e sem dados pessoais) para treinar a IA.</p>
+</section>
+
+<section id="fim" class="painel" hidden>
+  <h1 id="f-titulo">GAME OVER</h1>
+  <p class="sub" id="f-pont"></p>
+  <p class="peq" id="f-nota"></p>
+  <button id="b-de-novo" class="grande verde">JOGAR NOVAMENTE</button>
+  <button id="b-menu" class="grande azul">MENU INICIAL</button>
+</section>
+
+<script type="module" src="jogo.js"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+# Treino coletivo agendado: toda segunda-feira (e quando voce clicar em "Run workflow").
+# Nao roda no site: baixa as partidas, treina, e publica um novo docs/modelo.json.
+name: Treino coletivo
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  treinar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Baixar partidas, treinar e exportar
+        env:
+          COBRINHA_URL: ${{ secrets.COBRINHA_URL }}
+          EXPORT_TOKEN: ${{ secrets.EXPORT_TOKEN }}
+        run: python atualizar_modelo.py
+      - name: Publicar novo modelo
+        run: |
+          git config user.name "treino-coletivo"
+          git config user.email "treino-coletivo@users.noreply.github.com"
+          git add docs/modelo.json modelos modelo_cobrinha.pkl
+          git diff --cached --quiet || (git commit -m "Modelo treinado com as partidas coletadas" && git push)
